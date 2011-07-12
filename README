@@ -6,3 +6,32 @@ The served time can be manipulated per client (IPv4 address).
 Useful for keeping some client machines synchronized to a
 clock that is different from wall clock time.
 
+When a client connects, time-server looks for a file in the
+current directory with the same name as the client's IP address.
+The file can contain an offset on how the time should be fudged
+before being sent to the client.
+The offset must be recorded in the file as
+<op> <year> <op> <month> <op> <day> <op> <hour> <op> <minute> <op> <second><newline>
+
+op can be "+", "-" or "fix".
+year, month, day, hour, minute, second must be ints.
+
+Example:
+fix 2010 fix 1 fix 3 + 0 + 0 + 0
+
+That will cause time-server to always send the date 3-Jan-2010, with the
+current wall clock time.
+
+Right now, adding and subtracting values is broken. There is no
+intelligence at all there, and using these options can lead to broken
+timestamps leading to untold pain and suffering.
+
+If a file name with the client IP address is not found or if there is
+some other error while parsing the offset, the TCP connection will be
+closed without sending any value to the client.
+
+
+
+RFC 868 - Time Protocol: http://www.faqs.org/rfcs/rfc868.html
+
+
