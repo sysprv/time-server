@@ -1,0 +1,8 @@
+time-server
+===========
+
+Net time server written in Go.
+The served time can be manipulated per client (IPv4 address).
+Useful for keeping some client machines synchronized to a
+clock that is different from wall clock time.
+
